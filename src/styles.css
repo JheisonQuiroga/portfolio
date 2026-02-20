@@ -43,7 +43,7 @@ body::after {
   width: 100%;
   height: 100%;
   background: radial-gradient(
-    ellipse 800px 600px at 50% 30%,
+    ellipse 800px 600px at 50% 50%,
     rgba(139, 92, 246, 0.25) 0%,
     rgba(91, 52, 173, 0.15) 25% 30%,
     rgba(21, 16, 34, 0.5) 50% 55%,
@@ -154,7 +154,7 @@ ul {
   width: 100%;
   left: 0;
   right: 0;
-  background-color: transparent;
+  background-color: rgba(255, 255, 255, 0.829);
   backdrop-filter: blur(5px);
   position: sticky;
   top: 0;
