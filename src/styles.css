@@ -59,8 +59,46 @@ body::after {
     #0b0b0ed2 100%
   );
   pointer-events: none;
-  z-index: -1;
+  z-index: -2;
 }
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0; /* Atajo para top:0, right:0, bottom:0, left:0 */
+  z-index: -1; /* Detrás del texto */
+  pointer-events: none; /* Ignora los clicks */
+
+  /* --- PARTE 1: LA CUADRÍCULA MORADA --- */
+  /* Creamos una cuadrícula idéntica a la del body, pero con color MORADO BRILLANTE */
+  /* Usamos un rgba con más opacidad (0.4) para que brille */
+  background-image: 
+      linear-gradient(rgba(139, 92, 246, 0.4) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(139, 92, 246, 0.4) 1px, transparent 1px);
+  /* IMPORTANTE: El tamaño debe ser EXACTAMENTE el mismo que en el body (50px) */
+  background-size: 30px 30px;
+  background-repeat: repeat;
+
+
+  /* --- PARTE 2: LA MÁSCARA MÁGICA --- */
+  /* Esto funciona como una "ventana" redonda que sigue al mouse. */
+  /* Solo lo que esté dentro del círculo negro será visible */
+  
+  /* Propiedad estándar */
+  mask-image: radial-gradient(
+    circle at var(--x, 50%) var(--y, 50%),
+    black 0%,       /* Centro del mouse: totalmente visible */
+    transparent 120px /* A 250px del centro: se desvanece y se vuelve invisible */
+  );
+
+  /* Propiedad para compatibilidad con Chrome/Safari (Webkit) */
+  -webkit-mask-image: radial-gradient(
+    circle at var(--x, 10%) var(--y, 10%),
+    black 0%,
+    transparent 120px
+  );
+}
+
 
 /* ===========================================
      2. TIPOGRAFÍA GENERAL
