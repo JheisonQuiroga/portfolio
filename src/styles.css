@@ -249,7 +249,16 @@ ul {
 .nav__item {
   display: inline-block;
   margin: 0 16px;
+  border: 2px solid transparent;
+  border-radius: 10px;
+  transition: all 0.3s ease;
 }
+
+.nav__item:hover {
+  border-color: var(--brand-purple);
+}
+
+/* TODO: Agregar un fondo al link activo y al primer item dejarle el border-color fijo */
 
 .nav__link {
   padding: 8px 12px;
