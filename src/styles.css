@@ -202,6 +202,7 @@ ul {
   right: 0;
   background-color: rgba(255, 255, 255, 0.829);
   backdrop-filter: blur(5px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   position: sticky;
   top: 0;
   z-index: 1;
@@ -258,7 +259,7 @@ ul {
   border-color: var(--brand-purple);
 }
 
-/* TODO: Agregar un fondo al link activo y al primer item dejarle el border-color fijo */
+/* !TODO: Agregar un fondo al link activo y al primer item dejarle el border-color fijo */
 
 .nav__link {
   padding: 8px 12px;
@@ -636,59 +637,93 @@ p > strong {
   text-align: center;
   margin-bottom: 16px;
 }
-
 .skills__subtitle {
   text-align: center;
-  color: #666666;
+  color: var(--text-muted);
   margin-bottom: 32px;
 }
 
-.skills__list {
-  margin-bottom: 48px;
+/* Carrusel de Habilidades */
+.skills__carousel-container {
+  position: relative;
+  width: 100%;
+  margin: 0 auto 48px;
 }
 
-.skill {
-  margin-bottom: 32px;
+.skills__carousel {
+  display: flex;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 20px 10px;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  /* Eliminado scroll-snap-type para permitir movimiento fluido */
+}
+
+.skills__carousel::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.skill__card {
+  flex: 0 0 280px;
+  scroll-snap-align: center;
+  background-color: rgba(255, 255, 255, 0.062);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 32px;
+  text-align: center;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.skill__card:hover {
+  border-color: var(--brand-purple);
+  background-color: rgba(139, 92, 246, 0.05);
+  transform: translateY(-5px);
+}
+
+.skill__icon {
+  font-size: 48px;
+  margin-bottom: 16px;
 }
 
 .skill__name {
-  margin-bottom: 8px;
-  color: var(--brand-purple);
+  font-size: 20px;
+  color: var(--text-main);
+  margin-bottom: 12px;
+  font-family: var(--font-mono);
 }
 
-.skill__bar {
-  background-color: #e0e0e0;
-  height: 24px;
-  position: relative;
-  margin-bottom: 8px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.skill__progress {
-  background-color: var(--main-purple);
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-}
-
-.skill__progress--html {
-  width: 80%;
-}
-
-.skill__progress--css {
-  width: 80%;
-}
-
-.skill__progress--js {
-  width: 60%;
-}
-
-.skill__percentage {
-  color: #666666;
+.skill__description {
   font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 0;
 }
+
+.carousel__nav {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.carousel__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.carousel__dot--active {
+  background-color: var(--brand-purple);
+}
+
+.learning {
 
 /* ===========================================
      16. LEARNING

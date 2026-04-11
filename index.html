@@ -259,32 +259,47 @@
     <section class="skills" id="habilidades">
       <div class="skills__container">
         <h2 class="skills__title">Mis Habilidades</h2>
+        <p class="skills__subtitle">Tecnologías que domino y sigo perfeccionando</p>
 
-        <h3 class="skills__subtitle">Tecnologías que estoy aprendiendo</h3>
-
-        <div class="skills__list">
-          <div class="skill">
-            <h4 class="skill__name">HTML5 & Semántica</h4>
-            <div class="skill__bar">
-              <div class="skill__progress skill__progress--html"></div>
+        <div class="skills__carousel-container">
+          <div class="skills__carousel">
+            <!-- HTML5 -->
+            <div class="skill__card">
+              <span class="skill__icon">html5</span>
+              <h4 class="skill__name">HTML5</h4>
+              <p class="skill__description">Estructura semántica, accesibilidad y SEO técnico.</p>
             </div>
-            <span class="skill__percentage">75%</span>
+            <!-- CSS3 -->
+            <div class="skill__card">
+              <span class="skill__icon">css3</span>
+              <h4 class="skill__name">CSS3</h4>
+              <p class="skill__description">Diseño moderno, Flexbox, Grid y animaciones avanzadas.</p>
+            </div>
+            <!-- JavaScript -->
+            <div class="skill__card">
+              <span class="skill__icon">javascript</span>
+              <h4 class="skill__name">JavaScript</h4>
+              <p class="skill__description">Manipulación del DOM, lógica asíncrona y ES6+.</p>
+            </div>
+            <!-- Tailwind -->
+            <div class="skill__card">
+              <span class="skill__icon">tailwind</span>
+              <h4 class="skill__name">Tailwind</h4>
+              <p class="skill__description">Estilizado rápido y responsivo basado en utilidades.</p>
+            </div>
+            <!-- Git -->
+            <div class="skill__card">
+              <span class="skill__icon">git</span>
+              <h4 class="skill__name">Git & GitHub</h4>
+              <p class="skill__description">Control de versiones y colaboración en equipo.</p>
+            </div>
           </div>
-
-          <div class="skill">
-            <h4 class="skill__name">CSS3 & Diseño</h4>
-            <div class="skill__bar">
-              <div class="skill__progress skill__progress--css"></div>
-            </div>
-            <span class="skill__percentage">60%</span>
-          </div>
-
-          <div class="skill">
-            <h4 class="skill__name">JavaScript (Comenzando)</h4>
-            <div class="skill__bar">
-              <div class="skill__progress skill__progress--js"></div>
-            </div>
-            <span class="skill__percentage">20%</span>
+          <div class="carousel__nav">
+            <span class="carousel__dot carousel__dot--active"></span>
+            <span class="carousel__dot"></span>
+            <span class="carousel__dot"></span>
+            <span class="carousel__dot"></span>
+            <span class="carousel__dot"></span>
           </div>
         </div>
 
