@@ -38,8 +38,9 @@ body {
   font-family: var(--font-sans);
   background-color: #0B0B0E; /* Un color oscuro base similar a tus diseños */
   background-image: linear-gradient(0deg, #2a2a2a 1px, transparent 1px),
-  linear-gradient(90deg, #2a2a2a 1px, transparent 1px);
+    linear-gradient(90deg, #2a2a2a 1px, transparent 1px);
   background-size: 30px 30px; /* Tamaño de la cuadrícula */
+  background-attachment: fixed; /* Fija la cuadrícula al viewport */
   min-height: 100vh;
 }
 
@@ -59,6 +60,7 @@ body::after {
     #0b0b0ed2 100%
   );
   pointer-events: none;
+  /* Asegura que el fondo no interfiera con los clicks */
   z-index: -2;
 }
 
@@ -73,11 +75,11 @@ body::before {
   /* Creamos una cuadrícula idéntica a la del body, pero con color MORADO BRILLANTE */
   /* Usamos un rgba con más opacidad (0.4) para que brille */
   background-image: 
-      linear-gradient(rgba(139, 92, 246, 0.4) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(139, 92, 246, 0.4) 1px, transparent 1px);
-  /* IMPORTANTE: El tamaño debe ser EXACTAMENTE el mismo que en el body (50px) */
+    linear-gradient(rgba(139, 92, 246, 0.4) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(139, 92, 246, 0.4) 1px, transparent 1px);
   background-size: 30px 30px;
   background-repeat: repeat;
+  background-attachment: fixed; /* Fija la cuadrícula al viewport */
 
 
   /* --- PARTE 2: LA MÁSCARA MÁGICA --- */
@@ -723,11 +725,9 @@ p > strong {
   background-color: var(--brand-purple);
 }
 
-.learning {
-
 /* ===========================================
      16. LEARNING
-     =========================================== */
+  =========================================== */
 .learning {
   background-color: rgba(255, 255, 255, 0.062);
   padding: 32px;

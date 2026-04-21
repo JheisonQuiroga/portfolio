@@ -41,7 +41,7 @@ const dots = document.querySelectorAll(".carousel__dot");
 let animationId;
 let isPaused = false;
 let scrollSpeed = 0.5; // Velocidad suave de movimiento
-let currentScroll = 0;
+let currentScroll = 0; // Posición actual del scroll
 
 if (carousel && dots.length > 0) {
   const animate = () => {
