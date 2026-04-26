@@ -39,17 +39,22 @@ navLinks.forEach((link, index) => {
 const carousel = document.querySelector(".skills__carousel");
 const carouselNav = document.querySelector(".carousel__nav");
 const cards = carousel ? carousel.querySelectorAll(".skill__card") : [];
-let animationId;
 let isPaused = false;
-let scrollSpeed = 0.2; // Velocidad suave de movimiento
-let currentScroll = 0; // Posición actual del scroll
+let currentIndex = 0;
+let autoplayTimeoutId;
 
 if (carousel && carouselNav && cards.length > 0) {
+  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const autoplayDelay = 3800;
+  const resumeDelay = 2400;
+
   // Render dinámico de dots según cantidad de tarjetas
   carouselNav.innerHTML = "";
   cards.forEach((_, index) => {
-    const dot = document.createElement("span");
+    const dot = document.createElement("button");
+    dot.type = "button";
     dot.className = "carousel__dot";
+    dot.setAttribute("aria-label", `Ir a ${cards[index].querySelector(".skill__name")?.textContent || `tecnologia ${index + 1}`}`);
     if (index === 0) {
       dot.classList.add("carousel__dot--active");
     }
@@ -86,68 +91,95 @@ if (carousel && carouselNav && cards.length > 0) {
   };
 
   const setActiveDot = (activeIndex) => {
+    currentIndex = activeIndex;
     dots.forEach((dot, index) => {
       dot.classList.toggle("carousel__dot--active", index === activeIndex);
     });
   };
 
-  const animate = () => {
-    if (!isPaused) {
-      currentScroll += scrollSpeed;
-      const maxScroll = getMaxScroll();
-
-      // Reiniciar suavemente si llega al final del scroll real
-      if (currentScroll >= maxScroll) {
-        currentScroll = 0;
-      }
-
-      carousel.scrollLeft = currentScroll;
-      setActiveDot(getClosestCardIndex());
-    }
-    animationId = requestAnimationFrame(animate);
+  const goToCard = (index, behavior = "smooth") => {
+    const normalizedIndex = ((index % cards.length) + cards.length) % cards.length;
+    const targetScroll = getTargetScrollByIndex(normalizedIndex);
+    carousel.scrollTo({
+      left: targetScroll,
+      behavior
+    });
+    setActiveDot(normalizedIndex);
   };
 
-  // Iniciar animación
-  animate();
+  const clearAutoplay = () => {
+    clearTimeout(autoplayTimeoutId);
+  };
+
+  const scheduleAutoplay = (delay = autoplayDelay) => {
+    clearAutoplay();
+    if (isPaused || prefersReducedMotion) {
+      return;
+    }
+
+    autoplayTimeoutId = setTimeout(() => {
+      goToCard(currentIndex + 1);
+      scheduleAutoplay();
+    }, delay);
+  };
+
+  const pauseAutoplay = () => {
+    isPaused = true;
+    clearAutoplay();
+  };
+
+  const resumeAutoplay = (delay = resumeDelay) => {
+    isPaused = false;
+    scheduleAutoplay(delay);
+  };
+
+  goToCard(0, "auto");
+  scheduleAutoplay();
 
   // Pausar al pasar el mouse
   carousel.addEventListener("mouseenter", () => {
-    isPaused = true;
+    pauseAutoplay();
   });
 
   carousel.addEventListener("mouseleave", () => {
-    isPaused = false;
+    resumeAutoplay(1200);
+  });
+
+  carousel.addEventListener("touchstart", pauseAutoplay, { passive: true });
+  carousel.addEventListener("touchend", () => {
+    resumeAutoplay();
+  }, { passive: true });
+
+  carousel.addEventListener("focusin", pauseAutoplay);
+  carousel.addEventListener("focusout", () => {
+    resumeAutoplay();
   });
 
   // Permitir interacción con los dots
   dots.forEach((dot, index) => {
     dot.addEventListener("click", () => {
-      isPaused = true;
-      const targetScroll = getTargetScrollByIndex(index);
-      currentScroll = targetScroll;
-      setActiveDot(index);
-
-      carousel.scrollTo({
-        left: targetScroll,
-        behavior: "smooth"
-      });
-
-      // Reanudar después de un breve momento
-      setTimeout(() => {
-        isPaused = false;
-      }, 2000);
+      pauseAutoplay();
+      goToCard(index);
+      resumeAutoplay(4200);
     });
   });
 
-  // Sincronizar si el usuario hace scroll manual (opcional)
+  // Sincronizar si el usuario hace scroll manual
   carousel.addEventListener("scroll", () => {
-    currentScroll = carousel.scrollLeft;
     setActiveDot(getClosestCardIndex());
   });
 
   // Ajustar referencias al cambiar tamaño de pantalla
   window.addEventListener("resize", () => {
-    currentScroll = Math.min(currentScroll, getMaxScroll());
-    setActiveDot(getClosestCardIndex());
+    goToCard(currentIndex, "auto");
+  });
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      pauseAutoplay();
+      return;
+    }
+
+    resumeAutoplay(800);
   });
 }

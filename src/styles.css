@@ -657,9 +657,11 @@ p > strong {
   overflow-x: auto;
   gap: 20px;
   padding: 20px 10px;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE/Edge */
-  /* Eliminado scroll-snap-type para permitir movimiento fluido */
+  overscroll-behavior-x: contain;
 }
 
 .skills__carousel::-webkit-scrollbar {
@@ -715,14 +717,17 @@ p > strong {
 .carousel__dot {
   width: 10px;
   height: 10px;
+  padding: 0;
+  border: 0;
   border-radius: 50%;
   background-color: rgba(255, 255, 255, 0.2);
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .carousel__dot--active {
   background-color: var(--brand-purple);
+  transform: scale(1.15);
 }
 
 /* ===========================================
